@@ -6,22 +6,24 @@ let users = ['Juan Pérez', 'Lucía Gómez', 'Carlos López', 'Sara García'];
 
 const getUser = (posicion, timeout) => {
     return new Promise((resolve, reject) => {
-        reject({mensaje: 'Posición no válida'})
+        if(posicion < 0 || posicion >= users.length) {
+            reject({mensaje: 'Posición no válida'})
+        }
         setTimeout(() => {
             resolve({user: users[posicion]})
-        })
-    }, timeout)
+        }, timeout)
+    })
 }
 
 // Implementación de la promesa
 
-getUser(19, 2000)
+getUser(8, 5000)
     .then(data => {
         console.log(data);
-        return getUser(3, 3000);
+        return data.user // Ejecutar algo que no puedes hacer hasta que no tengas el valor original que devuelve la promesa
     })
     .then(data => {
-        console.log(data);
+        console.log('Hola ' + data); // Ejecutar algo que no puedes hacer hasta que no tengas el valor original que devuelve la promesa
     })
     .catch(error => console.error(error));
 
@@ -38,14 +40,3 @@ getUser(19, 2000)
 
 
 
-
-
-const mostrarMensaje = (nombre) => {
-
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('Hola ' + nombre);
-        }, 3000)
-    })
-    
-}
